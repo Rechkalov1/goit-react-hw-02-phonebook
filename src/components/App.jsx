@@ -1,12 +1,9 @@
-import {Component} from "react"
+import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import { ContactList } from './ContactList/ContactList';
 import { Form } from './Form/Form';
-import { FilterContact } from "./FormContact/FilterContact/FilterContact";
-import { Block } from "./App.styled";
-
-
-
+import { FilterContact } from './FormContact/FilterContact/FilterContact';
+import { Block } from './App.styled';
 
 export class App extends Component {
   state = {
@@ -14,8 +11,8 @@ export class App extends Component {
     filter: '',
   };
   addContact = data => {
-    if(this.isDublicate(data)){
-      return alert(`${data.name} -   is already in Phonebook List`)
+    if (this.isDublicate(data)) {
+      return alert(`${data.name} -   is already in Phonebook List`);
     }
     this.setState(prev => {
       const newContact = {
@@ -27,24 +24,26 @@ export class App extends Component {
       };
     });
   };
-  removeContact = (id)=>{
-    this.setState((prev)=>{
-      const newContact = prev.contact.filter((item)=>item.id !==id);
+  removeContact = id => {
+    this.setState(prev => {
+      const newContact = prev.contact.filter(item => item.id !== id);
       return {
-        contact:newContact,
-      }
-    })
-  }
+        contact: newContact,
+      };
+    });
+  };
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({
       [name]: value,
     });
   };
-  isDublicate({name,phone}){
-const {contact} =this.state;
-const result = contact.find((item)=>item.name === name && item.phone ===phone);
-return result;
+  isDublicate({ name, phone }) {
+    const { contact } = this.state;
+    const result = contact.find(
+      item => item.name === name && item.phone === phone
+    );
+    return result;
   }
   getFilterContacts() {
     const { contact, filter } = this.state;
@@ -52,29 +51,27 @@ return result;
     if (!filter) {
       return contact;
     }
-    const normalizedFilter=filter.toLocaleLowerCase();
-    const filteredContact=contact.filter(({name})=>{
-      const normalizedName=name.toLocaleLowerCase();
+    const normalizedFilter = filter.toLocaleLowerCase();
+    const filteredContact = contact.filter(({ name }) => {
+      const normalizedName = name.toLocaleLowerCase();
       const result = normalizedName.includes(normalizedFilter);
       return result;
-    })
+    });
     return filteredContact;
   }
   render() {
-    const { addContact, handleChange,removeContact} = this;
-  
+    const { addContact, handleChange, removeContact } = this;
+
     const contact = this.getFilterContacts();
     return (
       <>
-        <Block> <Form onSubmit={addContact} /></Block>
-         
-        
-        
-          <FilterContact handleChange={handleChange}/>
-          <ContactList items={contact}  removeContact={removeContact}/>
-        
+        <Block>
+          <Form onSubmit={addContact} />
+        </Block>
+
+        <FilterContact handleChange={handleChange} />
+        <ContactList items={contact} removeContact={removeContact} />
       </>
     );
   }
 }
-;

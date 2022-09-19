@@ -24,10 +24,10 @@ export const Button = styled.button`
   margin-top: 20px;
   font-size: 14px;
   border-radius: 10px;
- 
+
   outline: 0;
-    text-decoration: none;
-  
+  text-decoration: none;
+
   cursor: pointer;
   :hover {
     color: red;
